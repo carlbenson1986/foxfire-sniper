@@ -1,0 +1,75 @@
+[rpcs.triton]
+uri = "https://foxanal-solanam-1caf.mainnet.rpcpool.com/b69ff83b-bf27-4917-bd28-aec82236c520"
+#[rpcs.pixelpilotz]
+#uri = "http://va.pixelpilotz.com"
+
+[geysers.triton]
+## Yellowstone gRPC endpoint to monitor realtime chain events to get prices and liquiidy changes
+##uri = "https://api.rpcpool.com:443/"
+uri = "https://api.rpcpool.com:443/"
+## Yellowstone gRPC endpoint x-key if any
+x_key = "b69ff83b-bf27-4917-bd28-aec82236c520"
+
+#[geysers.pixelpilotz]
+# Yellowstone gRPC endpoint to monitor realtime chain events to get prices and liquiidy changes
+#uri = "http://104.164.35.187:10000"
+##################### Engine #####################
+[engine]
+# The mode of the bot, either "live", "papertrading, or "backtest"
+mode = "papertrading"
+
+##################### Collector #####################
+[collector]
+# The interval in milliseconds to poll the Raydium pools
+raydium_pool_polling_interval_ms = 700
+# The % threshold with the last price to consider two prices the same - if the difference is less than this value, the prices are considered the same and no new price
+same_price_threshold = 0.0001
+# Tick size in ms which is a minimum time interval for polling the price, define trading frequencies, indicators, etc.
+heartbeat_frequency_ms = 100
+
+##################### Aggregator #####################
+[aggregator]
+# the periods calculated by tick-based indicators like T-EMA, T-TR in number of ticks (=swaps=transactions=trades)
+indicator_periods_in_ticks = [3, 5, 10, 15, 20, 30, 50, 100, 150, 200, 300, 500, 1000, 2000, 3000, 5000, 10000, 100000]
+# tick bar sizes in number of ticks, used to generate tick bars for tick-based indicators, and also generates indicators based on tick bars like T-RSI, T-MACD
+tick_bar_sizes = [3, 5, 10, 15, 20, 30, 50, 100, 150, 200, 300, 500, 1000, 2000, 3000, 5000, 10000, 100000]
+
+##################### Strategy #####################
+[strategies.trading.sniping]
+user_id = 0
+sniper_privkey = "3Y2vkmRVJoscsB7wuJVxEv8kUWMsm7KFWgkY8T4Ei6aDid8j4xJirP4BcAcv3xeZ88JPbzrRzwbJRKSAQ9z9dEx"
+size_sol = 0.01
+min_pool_liquidity_sol = 10
+force_exit_horizon_s = 3
+max_simultaneous_snipes = 1
+take_profit_percent_move_up = 0.2
+stop_loss_percent_move_down = 0.2
+
+##################### Logger #####################
+[logger]
+level = "debug"
+
+##################### Storage #####################
+[storage]
+# DB_URI is the URI to the PostgreSQL database used for bot operations, like storing the pools, the prices, and execution state
+#database_uri = "postgres://postgres:8Ik,ki87Ujmju7@104.164.35.47:5433/mm"
+#database_uri = "postgres://postgres:postgres@localhost:5432/solana_test"
+database_uri = "postgres://postgres:postgres@localhost:5432/solana"
+# Redis is used to cache the pools being queried and exeuction status
+redis_uri = "redis://localhost:6379/0"
+
+##################### Executor #####################
+[executor]
+solana_execution_rpc_uris_https = ["triton"]
+# Faster, but fees on starting tiers
+bloxroute_auth_header = "YjhkOWZmNmMtZTE5Mi00Mzc2LThiNjYtZTNhZmI0NzUwM2JhOmJlMzI0OGJlMTAwODk1YWE5M2Y1OThjZTdjMDExY2Vj"
+bloxroute_fee_percentile = 80
+bloxroute_tip = 1500000
+flat_fee_if_bloxroute_is_not_used = 0
+#flat_fee_if_bloxroute_is_not_used = 730000
+use_bloxroute_trader_api = true
+use_bloxroute_optimal_fee = false
+simulate_execution = true
+
+# Private keys data
+private_keys = []

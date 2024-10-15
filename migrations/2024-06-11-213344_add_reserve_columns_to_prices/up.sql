@@ -1,0 +1,3 @@
+ALTER TABLE prices
+    ADD COLUMN base_reserve  DOUBLE PRECISION ,
+    ADD COLUMN quote_reserve  DOUBLE PRECISION;
